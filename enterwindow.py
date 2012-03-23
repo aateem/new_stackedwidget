@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from PySide import QtGui
+import userchoice
 
 class EnterWindow(QtGui.QWidget):
 
-    def __init__(self, mainwindow):
+    def __init__(self, mainwindow, backwardwidg):
         super(EnterWindow, self).__init__()
 
         self.mainwindow = mainwindow
+        self.backwardwidg = backwardwidg
 
         self.initUI()
 
@@ -44,7 +46,10 @@ class EnterWindow(QtGui.QWidget):
 
     #create slots
     def backward(self):
-       pass 
+        
+        self.mainwindow.stack.removeWidget(self)
+        self.mainwindow.stack.setCurrentWidget(self.backwardwidg)
+        self.mainwindow.stack.currentWidget().resize()
 
     def resize(self):
 
