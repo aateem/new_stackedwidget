@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from PySide import QtGui
+import enterwindow
 
 
 class ChoiceUser(QtGui.QWidget):
@@ -48,9 +49,10 @@ class ChoiceUser(QtGui.QWidget):
     #create slots
     def forward(self):
         # for the next page widget do (don't forget to pass the mainwindow reference):
-        # self.mainwindow.stack.addWidget(NextPageWidget(self.mainwindow))
-        # self.mainwindow.stack.currentWidget().resize()
-        pass
+        index = self.mainwindow.stack.addWidget(enterwindow.EnterWindow(self.mainwindow))
+        self.mainwindow.stack.setCurrentIndex(index)
+        self.mainwindow.stack.currentWidget().resize()
+
 
     def resize(self):
         # note that you should resize the mainwindow and not this widget
