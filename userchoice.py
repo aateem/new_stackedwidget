@@ -4,6 +4,7 @@
 from PySide import QtGui
 import enterwindow
 
+from mydao import dbp 
 
 class ChoiceUser(QtGui.QWidget):
 
@@ -24,18 +25,18 @@ class ChoiceUser(QtGui.QWidget):
         confLabel = QtGui.QLabel('Enter your name', self)
         passLabel = QtGui.QLabel('Enter your password', self)
 
-        userName = QtGui.QLineEdit(self)
-        password = QtGui.QLineEdit(self)
+        self.userName = QtGui.QLineEdit(self)
+        self.password = QtGui.QLineEdit(self)
 
-        password.setEchoMode(QtGui.QLineEdit.Password)
+        self.password.setEchoMode(QtGui.QLineEdit.Password)
 
         #fill widget with content
         vlayout = QtGui.QVBoxLayout()
 
         vlayout.addWidget(confLabel)
-        vlayout.addWidget(userName)
+        vlayout.addWidget(self.userName)
         vlayout.addWidget(passLabel)
-        vlayout.addWidget(password)
+        vlayout.addWidget(self.password)
         vlayout.addStretch(1)
         vlayout.addWidget(confirmButton)
         vlayout.addWidget(createNewProfileButton)
@@ -48,10 +49,20 @@ class ChoiceUser(QtGui.QWidget):
 
     #create slots
     def forward(self):
-        # for the next page widget do (don't forget to pass the mainwindow reference):
-        index = self.mainwindow.stack.addWidget(enterwindow.EnterWindow(self.mainwindow, self))
-        self.mainwindow.stack.setCurrentIndex(index)
-        self.mainwindow.stack.currentWidget().resize()
+
+        currusr= dbp.getCurrentUserId(self.userName.text(), self.password.text())
+        print(currusr)
+        if currusr:
+            # for the next page widget do (don't forget to pass the mainwindow reference):
+            index = self.mainwindow.stack.addWidget(enterwindow.EnterWindow(self.mainwindow, self))
+            self.mainwindow.stack.setCurrentIndex(index)
+            self.mainwindow.stack.currentWidget().resize()
+        else:
+            if QtGui.QMessageBox.critical(self, "Qtrainer", "Incorrect user name or password") == QtGui.QMessageBox.Ok:
+                self.userName.selectAll()
+                self.userName.del_()
+                self.password.selectAll()
+                self.password.del_()
 
 
     def resize(self):
