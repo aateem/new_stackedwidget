@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from PySide import QtGui
-import userchoice
 
 class EnterWindow(QtGui.QWidget):
 

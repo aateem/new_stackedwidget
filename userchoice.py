@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from PySide import QtGui
-import enterwindow
+import exersises
 
 from mydao import dbp 
 
@@ -51,10 +51,9 @@ class ChoiceUser(QtGui.QWidget):
     def forward(self):
 
         currusr= dbp.getCurrentUserId(self.userName.text(), self.password.text())
-        print(currusr)
         if currusr:
             # for the next page widget do (don't forget to pass the mainwindow reference):
-            index = self.mainwindow.stack.addWidget(enterwindow.EnterWindow(self.mainwindow, self))
+            index = self.mainwindow.stack.addWidget(exersises.Exercises(self.mainwindow))
             self.mainwindow.stack.setCurrentIndex(index)
             self.mainwindow.stack.currentWidget().resize()
         else:
